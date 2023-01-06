@@ -1,4 +1,4 @@
-let url = 'http://127.0.0.1:3005';
+const url = 'http://127.0.0.1:3005';
 
 let mainRow = document.querySelector('#main-row');
 let addBtn = document.querySelector('#addBtn');
@@ -89,8 +89,8 @@ function editEvent() {
         mainRow.innerHTML = `
     
             <div class="col-10 offset-1">
+            <h3>Edit Event</h3>
                 <div class="row">
-                    <h3>Edit Event</h3>
                         <form action="" method="">
                             <input type="hidden" id="updateId" value="${data._id}">
                             <input id="updateMsg" class="form-control" type="text" value="${data.msg}"><br>
