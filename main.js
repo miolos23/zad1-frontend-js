@@ -93,7 +93,9 @@ function editEvent() {
                 <div class="row">
                         <form action="" method="">
                             <input type="hidden" id="updateId" value="${data._id}">
-                            <input id="updateMsg" class="form-control" type="text" value="${data.msg}"><br>
+                            <label for="updateMsg">naziv</label>
+                            <input id="updateMsg" name="updateMsg" class="form-control" type="text" value="${data.msg}"><br>
+                            <label for="updateMsg">kolicina</label>
                             <input class="form-control" type="text" id="updateQuantity" value="${data.quantity}"><br>
                             <button id="updateBtn" class="btn btn-primary control">Update</button>
                             <button id="cancelBtn" class="btn btn-primary control">Cancel</button>
