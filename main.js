@@ -1,10 +1,8 @@
 const url = 'http://127.0.0.1:3005';
 
-let mainRow = document.querySelector('#main-row');
-let addBtn = document.querySelector('#addBtn');
-let input = document.querySelector('#inputMsg');
-let search = document.querySelector('#search');
-
+const mainRow = document.querySelector('#main-row');
+const addBtn = document.querySelector('#addBtn');
+const input = document.querySelector('#inputMsg');
 
 addBtn.addEventListener('click', newEvent);
 function newEvent() {
@@ -38,6 +36,20 @@ function displayEvents() {
     })
     data.then((data) => {
         let text = '';
+        text += `
+            <div class="container">
+                <div class="row">
+                     <div class="col-lg-5 col-md-6 col-sm-8 mx-auto">
+                        <div class="card my-5">
+                             <div class="card-body">
+                                 <div class="input-group mb-3">
+                                     <input type="text" id="search" class="form-control" placeholder="Search">
+                                 <div class="input-group-append">
+                                     <span class="input-group-text"> <i class="fas fa-search"></i> </span>
+                                </div>
+                            </div>
+                            <ul class="list-group mb-3" id="main-row">
+        `
         for (let i = 0; i < data.length; i++) {
             text += `
                 <li class="list-group-item">
@@ -47,8 +59,18 @@ function displayEvents() {
                 </li>
                 `
         }
+        text += `
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `
         mainRow.innerHTML = text;
 
+        let search = document.querySelector('#search');
+        search.addEventListener('keyup', searchEvent);
         let allDeleteBtns = document.querySelectorAll('[del-id]');
         let allEditBtns = document.querySelectorAll('[edit-id]');
         for (let i = 0; i < allDeleteBtns.length; i++) {
@@ -87,19 +109,24 @@ function editEvent() {
     })
     data.then((data) => {
         mainRow.innerHTML = `
-    
-            <div class="col-10 offset-1">
-            <h3>Edit Event</h3>
+            <div class="container">
                 <div class="row">
-                        <form action="" method="">
-                            <input type="hidden" id="updateId" value="${data._id}">
-                            <label for="updateMsg">naziv</label>
-                            <input id="updateMsg" name="updateMsg" class="form-control" type="text" value="${data.msg}"><br>
-                            <label for="updateMsg">kolicina</label>
-                            <input class="form-control" type="text" id="updateQuantity" value="${data.quantity}"><br>
-                            <button id="updateBtn" class="btn btn-primary control">Update</button>
-                            <button id="cancelBtn" class="btn btn-primary control">Cancel</button>
-                        </form>
+                     <div class="col-lg-5 col-md-6 col-sm-8 mx-auto">
+                        <h4 class="text-center">Edit Event</h4>
+                        <div class="col-10 offset-1">
+                            <div class="row">
+                                <form action="" method="">
+                                    <input type="hidden" id="updateId" value="${data._id}">
+                                    <label for="updateMsg">naziv</label>
+                                    <input id="updateMsg" name="updateMsg" class="form-control" type="text" value="${data.msg}"><br>
+                                    <label for="updateMsg">kolicina</label>
+                                    <input class="form-control" type="text" id="updateQuantity" value="${data.quantity}"><br>
+                                    <button id="updateBtn" class="btn btn-primary control">Update</button>
+                                    <button id="cancelBtn" class="btn btn-primary control">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                     </div>
                 </div>
             </div>
         `
@@ -113,8 +140,6 @@ function editEvent() {
             displayEvents();
         });
     })
-
-
 }
 
 function updateEvent(e) {
@@ -133,8 +158,6 @@ function updateEvent(e) {
     xml.setRequestHeader('Content-Type', 'application/json');
     xml.send(JSON.stringify({ id: inputId, msg: inputMsg, quantity: inputQuantity }));
 }
-
-search.addEventListener('keyup', searchEvent);
 
 function searchEvent(e) {
     const text = e.target.value.toLowerCase();
